@@ -4,18 +4,27 @@ import 'firebase/auth';
 const checkUser = (uid) => new Promise((resolve, reject) => {
   fetch(`http://localhost:5024/checkuser/${uid}`, {
     method: 'GET',
-
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
     },
   })
-    .then((resp) => resolve(resp.json()))
+    .then(async (res) => {
+      let data;
+      console.log('status:', res);
+      if (res.status === 204) {
+        resolve({});
+      } else {
+        data = await res.json();
+        console.log('data:', data);
+        resolve(data);
+      }
+    })
     .catch(reject);
 });
 
 const registerUser = (userInfo) => new Promise((resolve, reject) => {
-  fetch('http://localhost:5024/register/', {
+  fetch('http://localhost:5024/users', {
     method: 'POST',
     body: JSON.stringify(userInfo),
     headers: {

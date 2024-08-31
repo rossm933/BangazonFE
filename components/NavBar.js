@@ -23,8 +23,8 @@ export default function NavBar() {
             <Link passHref href="/marketplace">
               <Nav.Link>Marketplace</Nav.Link>
             </Link>
-            <Link passHref href="/cart">
-              <Nav.Link>Cart</Nav.Link>
+            <Link passHref href="/order">
+              <Nav.Link>Orders</Nav.Link>
             </Link>
             <Link passHref href="/seller">
               <Nav.Link>Products to Sell</Nav.Link>
