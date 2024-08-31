@@ -1,58 +1,66 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { registerUser } from '../utils/auth'; // Update with path to registerUser
+import { registerUser } from '../utils/auth';
 import { useAuth } from '../utils/context/authContext';
 
 function RegisterForm() {
   const { user, updateUser } = useAuth();
+
   const [formData, setFormData] = useState({
     uid: user.fbUser.uid,
-    name: '',
+    firstName: '',
+    lastName: '',
+    userName: '',
+    address: '',
     email: '',
-    seller: false,
+    Seller: false,
   });
+
+  const router = useRouter();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     registerUser(formData).then(() => updateUser(user.fbUser.uid));
-    console.warn(user.uid, user.fbUser.uid);
+    router.push('/profile');
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
+  const handleCheckboxChange = (e) => {
+    const { checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      Seller: checked,
     }));
   };
+
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>User Registration</Form.Label><br />
-        <Form.Text className="text-muted">Please enter your name</Form.Text>
-        <Form.Control type="text" name="FirstName" required placeholder="Name" onChange={handleChange} />
-        <Form.Text className="text-muted">Please enter your email address</Form.Text>
-        <Form.Control type="email" name="Email" required placeholder="Enter Email Address" onChange={handleChange} />
-        <Form.Text className="text-muted">Please enter your address</Form.Text><br />
-        <Form.Check
-          className="seller?"
-          type="switch"
-          label="Will you be selling products?"
-          id="seller"
-          name="isSeller"
-          checked={formData.isSeller}
-          onChange={(e) => {
-            setFormData((prevState) => ({
-              ...prevState,
-              isSeller: e.target.checked,
-            }));
-          }}
-        />
+      <Form.Group className="mb-3" controlId="formBasicFirstName">
+        <Form.Label>First Name</Form.Label>
+        <Form.Control type="text" name="firstName" required placeholder="Enter your First Name" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
       </Form.Group>
-      <Button variant="primary" type="submit">
+      <Form.Group className="mb-3" controlId="formBasicLastName">
+        <Form.Label>Last Name</Form.Label>
+        <Form.Control type="text" name="lastName" required placeholder="Enter your Last Name" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="formBasicUserName">
+        <Form.Label>Username</Form.Label>
+        <Form.Control type="text" name="userName" required placeholder="Enter your Username" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="formBasicAddress">
+        <Form.Label>Address</Form.Label>
+        <Form.Control type="text" name="address" required placeholder="Enter your Address" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Label>Email</Form.Label>
+        <Form.Control type="email" name="email" required placeholder="Enter your Email" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="formBasicSeller">
+        <Form.Check type="checkbox" label="Are you a seller?" checked={formData.Seller} onChange={handleCheckboxChange} />
+      </Form.Group>
+      <Button variant="danger" type="submit">
         Submit
       </Button>
     </Form>
@@ -62,15 +70,9 @@ function RegisterForm() {
 RegisterForm.propTypes = {
   user: PropTypes.shape({
     fbUser: PropTypes.shape({
-      id: PropTypes.number,
       uid: PropTypes.string.isRequired,
-      firstName: PropTypes.string,
-      lastName: PropTypes.string,
-      email: PropTypes.string,
-      userName: PropTypes.string,
-      profileImgUrl: PropTypes.string,
-      address: PropTypes.string,
-      isSeller: PropTypes.bool,
+      displayName: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
 };
