@@ -9,8 +9,8 @@ function Home() {
   const [authUser, setAuthUser] = useState();
 
   useEffect(() => {
-    checkUser(user.uid).then((data) => setAuthUser(data[0]));
-  }, [user.uid]);
+    checkUser(user.uid).then((data) => setAuthUser(data));
+  }, []);
 
   const onUpdate = () => {
     checkUser(user.uid).then((data) => setAuthUser(data));
