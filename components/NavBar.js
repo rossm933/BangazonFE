@@ -11,7 +11,7 @@ import { signOut } from '../utils/auth';
 
 export default function NavBar() {
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar collapseOnSelect expand="lg" style={{ background: '#008080', font: 'bold' }}>
       <Container>
         <Link passHref href="/">
           <Navbar.Brand>Bangazon</Navbar.Brand>
