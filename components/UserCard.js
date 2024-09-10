@@ -6,7 +6,12 @@ import Card from 'react-bootstrap/Card';
 
 function UserDetailCard({ userDetails, handleSwitchToSeller }) {
   return (
-    <Card className="user-details-card" style={{ width: '22rem', margin: '20px' }}>
+    <Card
+      style={{
+        width: '18rem', margin: '10px', border: 'solid 5px black', background: '#F5F5F5',
+      }}
+      className="user-details-card"
+    >
       <Card.Body>
         <Card.Title className="d-flex flex-column align-items-center justify-content-center" id="user-detail-card-title">User Details</Card.Title>
         <Card.Text><strong>First Name:</strong> {userDetails.firstName}</Card.Text>

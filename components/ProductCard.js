@@ -31,7 +31,10 @@ export default function ProductCard({
   };
 
   return (
-    <Card style={{ width: '18rem', margin: '10px' }}>
+    <Card style={{
+      width: '18rem', margin: '10px', border: 'solid 5px black', background: '#D4D4D4',
+    }}
+    >
       <Card.Img variant="top" src={productObj.imageUrl} alt={productObj.title} style={{ height: '400px' }} />
       <Card.Body>
         <Card.Title className="card-title">{productObj.title}</Card.Title>
